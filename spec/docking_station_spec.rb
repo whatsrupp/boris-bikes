@@ -16,4 +16,12 @@ describe DockingStation do
     bike = subject.release_bike
     expect(subject.dock(bike)).to be_a(Bike)
   end
+
+  it "shows if there is a docked bike" do
+    expect(subject).to respond_to(:bike)
+  end
+
+
+
+
 end
