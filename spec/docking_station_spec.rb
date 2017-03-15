@@ -38,8 +38,8 @@ describe DockingStation do
 
   end
 
-  it "Checks maximum capacity" do
-    expect(subject.capacity).to eq 20
+  it "Checks default maximum capacity" do
+    expect(subject.capacity).to eq subject::DEFAULT_CAPACITY
   end
 
 
