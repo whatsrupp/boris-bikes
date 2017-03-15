@@ -19,25 +19,28 @@ describe DockingStation do
     end
   end
 
-
   describe "#dock" do
 
     it "checks dock method" do
       expect(subject).to respond_to(:dock).with(1).argument
     end
 
-    it "bike is docked" do
+    it "checks bike has been added to existing bikes" do
       bike = Bike.new
-      expect(subject.dock(bike)).to eq bike
+      expect(subject.dock(bike)).to eq (subject.bikes << bike)
     end
 
     it "Cannot dock if the station is full" do
-      bike1 = Bike.new
-      subject.dock(bike1)
-      bike2 = Bike.new
-      expect {subject.dock(bike2)}.to raise_error("Dock Full")
+      subject.capacity.times {subject.dock(Bike.new)}
+      expect {subject.dock(Bike.new)}.to raise_error("Dock Full")
+
     end
 
   end
+
+  it "Checks maximum capacity" do
+    expect(subject.capacity).to eq 20
+  end
+
 
 end
