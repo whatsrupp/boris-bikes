@@ -19,7 +19,9 @@ describe DockingStation do
     end
 
     it "raises bike broken if bike broken" do
-      subject.dock(Bike.new)
+      bike = Bike.new
+      bike.break
+      subject.bikes.push(bike)
       expect {subject.release_bike}.to raise_error("Bike Broken")
     end
   end
@@ -46,11 +48,17 @@ describe DockingStation do
       expect { bike.working?.to eq false}
     end
 
+    it "Docks bike when bike is broken" do
+      bike = Bike.new
+      bike.break
+      subject.dock(bike)
+      expect(subject.bikes.last).to eq bike
+    end
+
   end
 
   it "Checks default maximum capacity" do
     expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
   end
-
 
 end
