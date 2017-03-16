@@ -19,8 +19,8 @@ class DockingStation
 
   def dock(bike)
     fail "Dock Full" if full?
+    bike.break
     @bikes << bike
-
   end
 
   private
