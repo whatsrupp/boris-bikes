@@ -23,6 +23,11 @@ class DockingStation
     @bikes << bike
   end
 
+  def remove_bikes
+    van_bikes = @bikes.select {|bike| !bike.working?}
+    @bikes.select! {|bike| bike.working?}
+  end
+
   private
 
   def empty?

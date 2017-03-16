@@ -3,6 +3,7 @@ require 'docking_station'
 describe DockingStation do
 
   let (:bike) {double :bike}
+  let (:van) {double :van}
 
   describe "#release_bike" do
 
@@ -15,13 +16,13 @@ describe DockingStation do
     end
 
     it "releases a bike" do
-      allow(bike).to receive(:working?).and_return(true)
+      bike = double(:bike, working?: true)
       subject.bikes.push(bike)
       expect(subject.release_bike).to eq(bike)
     end
 
     it "raises bike broken if bike broken" do
-      allow(bike).to receive(:working?).and_return(false)
+      bike = double(:bike, working?: false)
       subject.bikes.push(bike)
       expect {subject.release_bike}.to raise_error("Bike Broken")
     end
@@ -48,7 +49,7 @@ describe DockingStation do
     end
 
     it "Docks bike when bike is broken" do
-      allow(bike).to receive(:working?).and_return(false)
+      bike = double(:bike, working?: false)
       subject.dock(bike)
       expect(subject.bikes.last).to eq bike
     end
@@ -57,6 +58,16 @@ describe DockingStation do
 
   it "Checks default maximum capacity" do
     expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+  end
+
+  describe '#remove_bikes' do
+      it 'removes broken bikes from docking station' do
+        broken_bike = double(:bike, working?: false)
+        working_bike = double(:bike, working?: true)
+        2.times { subject.dock(broken_bike) }
+        2.times { subject.dock(working_bike) }
+        expect(subject.remove_bikes).not_to include(broken_bike)
+      end
   end
 
 end
