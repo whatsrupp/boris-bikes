@@ -14,8 +14,13 @@ describe DockingStation do
 
     it "releases a bike" do
       bike = Bike.new
-      subject.dock(bike)
+      subject.bikes.push(bike)
       expect(subject.release_bike).to eq(bike)
+    end
+
+    it "raises bike broken if bike broken" do
+      subject.dock(Bike.new)
+      expect {subject.release_bike}.to raise_error("Bike Broken")
     end
   end
 
