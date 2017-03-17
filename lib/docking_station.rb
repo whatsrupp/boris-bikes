@@ -1,5 +1,6 @@
 require_relative 'bike'
 require_relative 'van'
+require_relative 'garage'
 
 
 
@@ -25,8 +26,7 @@ class DockingStation
     @bikes << bike
   end
 
-  def remove_bikes
-    van = Van.new
+  def remove_bikes (van = Van.new)
     van_bikes = @bikes.select {|bike| !bike.working?}
     van.load_van(van_bikes)
     @bikes.select! {|bike| bike.working?}
